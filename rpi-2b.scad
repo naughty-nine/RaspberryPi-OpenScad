@@ -25,8 +25,8 @@ rpi_bottom_clearance = 3;
 rpi_standoff = 13;  // 12.9
 
 
-led1_y_inset = 7.6;
-led2_y_inset = 11.6;
+led1_y_inset = 6.5;
+led2_y_inset = 10.1;
 
 module rpi_2b(cutout=[0, 0]) {
  
