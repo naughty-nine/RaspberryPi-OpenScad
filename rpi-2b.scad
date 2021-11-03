@@ -3,7 +3,8 @@
 //  © naughty.nin@gmail.com 2021 - CC BY-NC-SA 4.0 
 //
 include <BOSL2/std.scad>
-include <rpi-modules.scad>
+include <rpi-common.scad>
+use <rpi-components.scad>
 
 //
 //  R-pi
@@ -47,63 +48,74 @@ module rpi_2b(cutout=[0, 0]) {
   }
   
   // Micro USB
+  microusb_out = 1.3;
   left(rpi_width/2-10.6)
-  fwd(rpi_depth/2-microusb_depth/2+microusb_out)
+  fwd(rpi_depth/2 - microusb_dimension().y/2 + microusb_out)
   microusb(cutout=cutout);
 
   // HDMI
+  hdmi_out = 1.5;
   left(rpi_width/2-32)
-  fwd(rpi_depth/2-hdmi_depth/2+hdmi_out)
+  fwd(rpi_depth/2 - hdmi_dimension().y/2 + hdmi_out)
   hdmi(cutout=cutout);
 
   // Audio
   left(rpi_width/2-53.5)
-  fwd(rpi_depth/2-audio_depth/2)
+  fwd(rpi_depth/2)
   audio(cutout=cutout);
 
   // Ethernet
    first = cutout[0];
    _cutout = [(first>0) ? 0.25 : cutout[0],
               cutout[1]];
-  right(rpi_width/2-ethernet_depth/2+ethernet_out)
+  ethernet_out = 1.8;
+  right(rpi_width/2+ethernet_out)
   fwd(rpi_depth/2-10.25)
   zrot(90)
   ethernet(cutout=_cutout);
 
+  // USB
+  usb_out = 2.1;
+  
   // USB 1
-  right(rpi_width/2-usb_depth/2+usb_out)
+  right(rpi_width/2+usb_out)
   fwd(rpi_depth/2-29)
   zrot(90)
   usb(cutout=_cutout);
 
   // USB 2
-  right(rpi_width/2-usb_depth/2+usb_out)
+  right(rpi_width/2+usb_out)
   fwd(rpi_depth/2-47)
   zrot(90)
   usb(cutout=_cutout);
 
   // GPIO
+  pinconnector_inset = 0.85;  //1;     measured 1.0, corrected after print.
   left(rpi_width/2 - rpi_hole_inset - 29)// + pinconnector_base_dimension/2)
-  back(rpi_depth/2 - pinconnector_inset - pinconnector_base_dimension)
+  back(rpi_depth/2 - pinconnector_inset - pinconnector_base_dimension())
   pinconnector(cutout=cutout);
 
   // Micro SD
-  left(rpi_width/2 - microsd_depth/2 + microsd_out)
-  down(rpi_board_height + microsd_height)
+  microsd_out = -1.7;
+  left(rpi_width/2 + microsd_out)
+  down(rpi_board_height + microsd_dimension().z) //    microsd_height)
   zrot(-90)
   microsd(cutout=cutout);
 
   // LEDs
-  left(rpi_width/2 - led_depth/2 - led_inset)
-  fwd(rpi_depth/2 - led_width/2  - led1_y_inset)
+  led_dim = [2, 1, 0.5];
+  led_inset_x = 2;
+  left(rpi_width/2 - led_dim.y/2 - led_inset_x)
+  fwd(rpi_depth/2 - led_dim.x/2  - led1_y_inset)
   zrot(-90)
-  led(cutout=cutout);
+  led(dim=led_dim, color="red", cutout=cutout);
 
-  left(rpi_width/2 - led_depth/2 - led_inset)
-  fwd(rpi_depth/2 - led_width/2  - led2_y_inset)
+  left(rpi_width/2 - led_dim.y/2 - led_inset_x)
+  fwd(rpi_depth/2 - led_dim.x/2  - led2_y_inset)
   zrot(-90)
-  led(cutout=cutout);
+  led(dim=led_dim, color="lime", cutout=cutout);
 } 
 
-// rpi_2b();
-// %rpi_2b(cutout=[0.5, 20]);
+rpi_2b();
+down(40)
+rpi_2b(cutout=[0.5, 20]);

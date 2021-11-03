@@ -1,8 +1,7 @@
 [![CC BY NC SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
-# Raspberry-Pi 2B model for OpenSCAD
-OpenSCAD model for Raspberry Pis 2 Model B.
-Should be compatible with any version 1 or 2 (not tested).
+# Raspberry-Pi 2B and 4 models for OpenSCAD
+OpenSCAD model for Raspberry Pi 4 and Pi 2 Model B (should be compatible with any version 1 or 2 (not tested)).
 
 Useful for documentation or - as the intended purpose - 3D printing models.
 
