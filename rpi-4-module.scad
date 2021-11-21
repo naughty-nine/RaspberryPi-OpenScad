@@ -8,6 +8,11 @@ include <rpi-common.scad>
 use     <rpi-components.scad>
 use     <rpi-4-components.scad>
 
+RPI4_CUTOUT_SKIP_USBC = false;
+RPI4_CUTOUT_SKIP_AUDIO = false;
+RPI4_CUTOUT_SKIP_HDMI1 = false;
+RPI4_CUTOUT_SKIP_HDMI2 = false;
+RPI4_CUTOUT_SKIP_SD = false;
 
 module rpi4(cutout=[0, 0]) {
   union() {
@@ -30,12 +35,36 @@ module rpi4_front_connectors(cutout=[0, 0]) {
     x2 = x1 + 14.8;
     x3 = x2 + 13.5;
     fwd(1.3) {
-      right(x1) usb_c(cutout=cutout);
-      right(x2) hdmi_micro(cutout=cutout);
-      right(x3) hdmi_micro(cutout=cutout);
+      right(x1) {
+        if (RPI4_CUTOUT_SKIP_USBC) {
+          usb_c(cutout=[0,0]);
+        } else {
+          usb_c(cutout=cutout);
+        } 
+      }
+      right(x2)  {
+        if (RPI4_CUTOUT_SKIP_HDMI1) {
+          hdmi_micro(cutout=[0,0]);
+        } else  {
+          hdmi_micro(cutout=cutout);
+        }
+      }
+      right(x3) {
+        if (RPI4_CUTOUT_SKIP_HDMI2) {
+          hdmi_micro(cutout=[0,0]);
+        } else {
+          hdmi_micro(cutout=cutout);
+        }
+      }
     }
     x5 = x3 + 7 + 7.5;
-    right(x5) audio(cutout=cutout);
+    right(x5) {
+      if (RPI4_CUTOUT_SKIP_AUDIO) {
+        audio(cutout=[0,0]);
+      } else {
+        audio(cutout=cutout);
+      }
+    }
   }
 }
 
@@ -95,7 +124,12 @@ module rpi4_left_connectors(cutout=[0, 0]) {
     down(rpi_pcb_dim.z+microsd_dimension().z)
     back(y3) 
     back(rpi_hole_inset)
-    zrot(-90) microsd(cutout=cutout);
+    zrot(-90) 
+    if (RPI4_CUTOUT_SKIP_SD) {
+      microsd(cutout=[0,0]);
+    } else {
+      microsd(cutout=cutout);
+    }
   }
 }
 
