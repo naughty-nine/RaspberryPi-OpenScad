@@ -93,7 +93,9 @@ module rpi4_left_connectors(cutout=[0, 0]) {
     //cuboid([1, led_insets_y[2], 1], anchor=BACK);
     y3 = 24.5;
     down(rpi_pcb_dim.z+microsd_dimension().z)
-    back(y3) zrot(-90) microsd(cutout=cutout);
+    back(y3) 
+    back(rpi_hole_inset)
+    zrot(-90) microsd(cutout=cutout);
   }
 }
 
