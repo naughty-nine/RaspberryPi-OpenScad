@@ -8,10 +8,10 @@ include <rpi-common.scad>
 use     <rpi-components.scad>
 use     <rpi-4-components.scad>
 
-RPI4_CUTOUT_SKIP_USBC = false;
-RPI4_CUTOUT_SKIP_AUDIO = false;
-RPI4_CUTOUT_SKIP_HDMI1 = false;
-RPI4_CUTOUT_SKIP_HDMI2 = false;
+RPI4_CUTOUT_SKIP_USBC = true;
+RPI4_CUTOUT_SKIP_AUDIO = true;
+RPI4_CUTOUT_SKIP_HDMI1 = true;
+RPI4_CUTOUT_SKIP_HDMI2 = true;
 RPI4_CUTOUT_SKIP_SD = false;
 
 module rpi4(cutout=[0, 0]) {
